@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import { getCollection } from 'astro:content';
 import { site } from '../site';
+import { url } from '../url';
 const posts = (await getCollection('blog')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf()).slice(0, 3);
 ---
 <Base>
@@ -37,7 +38,7 @@ const posts = (await getCollection('blog')).sort((a, b) => b.data.date.valueOf()
       <ul class="post-list">
         {posts.map((post) => (
           <li>
-            <a class="card" href={`/blog/${post.id}`}>
+            <a class="card" href={url(`/blog/${post.id}`)}>
               <h3>{post.data.title}</h3>
               <p>{post.data.description}</p>
               <span class="post-meta">{post.data.date.toLocaleDateString('en-US', { dateStyle: 'long' })}</span>
@@ -45,7 +46,7 @@ const posts = (await getCollection('blog')).sort((a, b) => b.data.date.valueOf()
           </li>
         ))}
       </ul>
-      <a class="btn" href="/blog">All posts</a>
+      <a class="btn" href={url('/blog')}>All posts</a>
     </section>
   )}
 
