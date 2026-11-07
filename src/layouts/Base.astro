@@ -3,8 +3,7 @@ import { site } from '../site';
 import { url } from '../url';
 import '../styles/global.css';
 interface Props { title?: string; description?: string }
-const { title, description = site.tagline } = Astro.props;
-const fullTitle = title ? `${title} · ${site.name}` : site.name;
+const { title, description = site.headline } = Astro.props;
 ---
 <!doctype html>
 <html lang="en">
@@ -12,22 +11,20 @@ const fullTitle = title ? `${title} · ${site.name}` : site.name;
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
-    <title>{fullTitle}</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✦</text></svg>" />
+    <title>{title ? `${title} · ${site.name}` : `${site.name} · ${site.role}`}</title>
   </head>
   <body>
-    <header class="nav">
-      <a class="logo" href={url('/')}>{site.name}</a>
+    <header class="top">
+      <a class="brand" href={url('/')}><span class="prompt">&gt;_</span> {site.name}</a>
       <nav>
-        <a href={url('/#about')}>About</a>
+        <a href={url('/#expertise')}>Expertise</a>
         <a href={url('/#projects')}>Projects</a>
         <a href={url('/blog')}>Blog</a>
-        <a href={url('/#contact')}>Contact</a>
+        <a href={url('/#about')}>About</a>
+        <a class="cta" href={url('/#contact')}>Contact</a>
       </nav>
     </header>
     <main><slot /></main>
-    <footer class="footer">
-      <p>© {new Date().getFullYear()} {site.name}. Built with Astro.</p>
-    </footer>
+    <footer class="foot"><span class="mono">© {new Date().getFullYear()} {site.name}</span></footer>
   </body>
 </html>
