@@ -1,0 +1,32 @@
+---
+import { site } from '../site';
+import '../styles/global.css';
+interface Props { title?: string; description?: string }
+const { title, description = site.tagline } = Astro.props;
+const fullTitle = title ? `${title} · ${site.name}` : site.name;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <title>{fullTitle}</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✦</text></svg>" />
+  </head>
+  <body>
+    <header class="nav">
+      <a class="logo" href="/">{site.name}</a>
+      <nav>
+        <a href="/#about">About</a>
+        <a href="/#projects">Projects</a>
+        <a href="/blog">Blog</a>
+        <a href="/#contact">Contact</a>
+      </nav>
+    </header>
+    <main><slot /></main>
+    <footer class="footer">
+      <p>© {new Date().getFullYear()} {site.name}. Built with Astro.</p>
+    </footer>
+  </body>
+</html>
