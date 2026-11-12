@@ -1,84 +1,159 @@
 ---
 import Base from '../layouts/Base.astro';
-import { getCollection } from 'astro:content';
 import { site } from '../site';
 import { url } from '../url';
-const posts = (await getCollection('blog')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf()).slice(0, 3);
-const fmt = (d: Date) => d.toLocaleDateString('en-US', { dateStyle: 'medium' });
 ---
 <Base>
-  <section class="hero">
-    <p class="eyebrow mono"><span class="prompt">$</span> {site.role.toLowerCase()}</p>
-    <h1>{site.headline}</h1>
-    <p class="lead">{site.intro}</p>
-    <div class="badges">
-      {site.tracks.map((t) => <span class={`badge ${t.id}`}>{t.label}</span>)}
+  <header class="site-header">
+    <div class="wrap bar">
+      <a class="logo" href="#top">{site.name}</a>
+      <nav aria-label="Primary">
+        <a class="nav-link" href="#about">About</a>
+        <a class="nav-link" href="#technical">Technical</a>
+        <a class="nav-link" href="#perspectives">Academia</a>
+        <a class="nav-link" href="#work">Research</a>
+        <a class="nav-link" href="#work">Projects</a>
+        <a class="nav-link" href="#insights">Insights</a>
+        <a class="btn btn-navy" href="#connect">Connect</a>
+      </nav>
     </div>
-    <div class="actions">
-      <a class="btn primary" href="#projects">See my work</a>
-      <a class="btn" href="#contact">Get in touch</a>
-    </div>
-    <dl class="stats">
-      {site.stats.map((s) => <div><dt>{s.value}</dt><dd>{s.label}</dd></div>)}
-    </dl>
-  </section>
+  </header>
 
-  <section id="expertise">
-    <h2><span class="mono hash">//</span> Two sides of the same job</h2>
-    <div class="tracks">
-      {site.tracks.map((t) => (
-        <article class={`track ${t.id}`}>
-          <p class="mono label">{t.label}</p>
-          <h3>{t.blurb}</h3>
-          <ul>{t.points.map((p) => <li>{p}</li>)}</ul>
-        </article>
-      ))}
-    </div>
-  </section>
-
-  <section id="projects">
-    <h2><span class="mono hash">//</span> Selected projects</h2>
-    <div class="grid">
-      {site.projects.map((p) => (
-        <a class="card" href={p.href}>
-          <span class={`badge small ${p.track.toLowerCase()}`}>{p.track}</span>
-          <h3>{p.title}</h3>
-          <p>{p.description}</p>
-          <p class="mono tags">{p.tags.join(' · ')}</p>
-        </a>
-      ))}
-    </div>
-  </section>
-
-  {posts.length > 0 && (
-    <section id="writing">
-      <h2><span class="mono hash">//</span> Latest writing</h2>
-      <ul class="posts">
-        {posts.map((post) => (
-          <li><a href={url(`/blog/${post.id}`)}>
-            <span class="mono date">{fmt(post.data.date)}</span>
-            <span class="pt">{post.data.title}</span>
-            <span class="pd">{post.data.description}</span>
-          </a></li>
-        ))}
-      </ul>
-      <p><a class="link" href={url('/blog')}>All posts →</a></p>
-    </section>
-  )}
-
-  <section id="about">
-    <h2><span class="mono hash">//</span> About</h2>
-    <div class="about">{site.about.map((p) => <p>{p}</p>)}</div>
-  </section>
-
-  <section id="contact">
-    <div class="contact">
-      <h2><span class="mono hash">//</span> Let’s talk</h2>
-      <p>Hiring, partnering, or just curious? I’d like to hear from you.</p>
-      <div class="actions">
-        <a class="btn primary" href={`mailto:${site.email}`}>{site.email}</a>
-        {site.links.map((l) => <a class="btn" href={l.href}>{l.label}</a>)}
+  <main>
+    <section id="top" class="hero wrap">
+      <div class="hero-copy">
+        <p class="eyebrow">{site.eyebrow}</p>
+        <h1>{site.headline}</h1>
+        <p class="lead">{site.intro}</p>
+        <dl class="stats">
+          {site.stats.map((s) => <div><dt>{s.value}</dt><dd>{s.label}</dd></div>)}
+        </dl>
+        <div class="actions">
+          <a class="btn btn-terracotta" href="#work">Explore my work</a>
+          <a class="btn btn-outline" href="#connect">Get in touch</a>
+        </div>
       </div>
+      <div class="hero-img">
+        <img src={url('/portrait.png')} alt="Portrait of Soumyadeep De" width="480" height="480" />
+      </div>
+    </section>
+
+    <section id="perspectives" class="band navy">
+      <div class="wrap stack-lg">
+        <div class="heading">
+          <p class="eyebrow light">Four perspectives</p>
+          <h2>One curiosity, seen from four sides.</h2>
+        </div>
+        <div class="grid g240">
+          {site.perspectives.map((p) => (
+            <div class="persp"><span class="serif">{p.title}</span><p>{p.text}</p></div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="journey wrap">
+      <div class="journey-head">
+        <p class="eyebrow">Professional journey</p>
+        <h2>From code to classroom to company.</h2>
+        <a class="textlink" href="#connect">Full biography and CV →</a>
+      </div>
+      <ol class="timeline">
+        {site.journey.map((j) => (
+          <li><span class="when">{j.when}</span><div><h3>{j.title}</h3><p>{j.text}</p></div></li>
+        ))}
+      </ol>
+    </section>
+
+    <section id="technical" class="technical wrap stack-lg">
+      <div class="heading">
+        <p class="eyebrow">Technical work</p>
+        <h2>I build things, not just plans for them.</h2>
+      </div>
+      <div class="stack-md">
+        <p class="kicker">Recent builds · Last two months</p>
+        <div class="grid g300">
+          {site.recentBuilds.map((b) => (
+            <article class="card navy-card"><span class="kicker light">{b.kind}</span><h3>{b.title}</h3><p>{b.text}</p></article>
+          ))}
+        </div>
+      </div>
+      <div class="grid g240 skills">
+        {site.skills.map((s) => (
+          <div class="skill">
+            <h3>{s.title}</h3>
+            <ul class="tags">{s.tags.map((t) => <li>{t}</li>)}</ul>
+            <p>{s.text}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section id="work" class="band stone">
+      <div class="wrap stack-lg">
+        <div class="heading">
+          <p class="eyebrow">Research and projects</p>
+          <h2>Selected work.</h2>
+        </div>
+        <div class="stack-md">
+          <article class="research">
+            <div>
+              <span class="kicker light">{site.research.kind}</span>
+              <h3>{site.research.title}</h3>
+            </div>
+            <p>{site.research.text}</p>
+          </article>
+          <div class="grid g380">
+            {site.apps.map((a) => (
+              <article class="card ivory-card">
+                <span class="kicker">{a.kind}</span>
+                <h3>{a.title}</h3>
+                <p class="tagline">{a.tagline}</p>
+                <ul class="points">{a.points.map((p) => <li>{p}</li>)}</ul>
+                <a class="cardlink" href={a.link.href} target="_blank" rel="noopener">{a.link.label} →</a>
+              </article>
+            ))}
+          </div>
+          <div class="grid g360">
+            {site.otherProjects.map((p) => (
+              <article class="card ivory-card small"><span class="kicker">{p.kind}</span><h3>{p.title}</h3><p>{p.text}</p></article>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="insights" class="insights wrap stack-lg">
+      <div class="heading">
+        <p class="eyebrow">Insights</p>
+        <h2>Ideas I write about.</h2>
+      </div>
+      <div class="grid g280">
+        {site.insights.map((i) => (
+          <article class="insight"><span class="meta">{i.kind}</span><h3>{i.title}</h3><p>{i.text}</p></article>
+        ))}
+      </div>
+    </section>
+
+    <section id="connect" class="band terracotta">
+      <div class="wrap connect">
+        <div class="connect-copy">
+          <h2>Let’s build something meaningful together.</h2>
+          <p>For collaborations in research, teaching, technology projects or ventures, I would be glad to hear from you.</p>
+        </div>
+        <div class="connect-actions">
+          <a class="btn btn-ivory" href={`mailto:${site.email}`}>Send a message</a>
+          <a class="btn btn-white-outline" href={site.linkedin} target="_blank" rel="noopener">LinkedIn</a>
+          <a class="mail" href={`mailto:${site.email}`}>{site.email}</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap foot">
+      <span>© {new Date().getFullYear()} {site.name}</span>
+      <span>{site.eyebrow}</span>
     </div>
-  </section>
+  </footer>
 </Base>
