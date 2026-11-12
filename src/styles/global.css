@@ -79,7 +79,8 @@ h1{font-size:clamp(2.5rem,5.4vw,4.25rem);line-height:1.05;color:var(--navy)}
   .stats dt{font-size:24px}
   .stats dd{font-size:12px}
   .actions{flex-direction:column}
-  .hero-img{order:2}
+  .hero-img{order:-1}
+  .hero-img img{max-width:320px}
   .band .wrap,.stone .wrap{padding-block:56px}
 }
 
@@ -146,8 +147,6 @@ h1{font-size:clamp(2.5rem,5.4vw,4.25rem);line-height:1.05;color:var(--navy)}
 .connect-copy p{font-size:18px;max-width:520px}
 .connect-actions{flex:0 1 340px;display:flex;flex-direction:column;gap:12px}
 .connect-actions .btn{width:100%}
-.mail{color:#fff;text-align:center;font-size:15px;text-decoration:underline;padding:8px;word-break:break-all}
-.mail:hover{color:#fff;opacity:.85}
 @media (max-width:640px){ .connect{gap:20px} .connect-actions{flex-basis:100%;width:100%} }
 
 /* footer */
