@@ -1,9 +1,7 @@
 import { defineConfig } from 'astro/config';
 
-// Project site on GitHub Pages: https://soumyadeep1399work.github.io/personal-website/
-// If you later use a custom domain or rename the repo to <user>.github.io,
-// set `site` to that URL and remove `base`.
+// User site on GitHub Pages: repo must be named <username>.github.io
+// Live at https://soumyadeep1399work.github.io/ (served from the root, so no `base`).
 export default defineConfig({
   site: 'https://soumyadeep1399work.github.io',
-  base: '/personal-website',
 });
